@@ -1,6 +1,7 @@
-import database as db
-connexion = db.Connexion()
-cursor = db.Connexion.cursor()
+import database
+from ListePersonnes.ListePersonne import ListePersonne
+connexion = database.Connexion()
+cursor = connexion.cursor()
 
 class ListePersonneDao:
     def __init__(self):
