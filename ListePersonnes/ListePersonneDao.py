@@ -1,15 +1,14 @@
 import database
 from ListePersonnes.ListePersonne import ListePersonne
 class ListePersonneDao:
-    def __init__(self):
-        connexion = database.Connexion()
-        cursor = connexion.cursor() 
+    connexion = database.Connexion()
+    cursor = connexion.cursor() 
 
     @classmethod
-    def Ajouter_personne(cls, nom, age,email):
+    def Ajouter_personne(cls, nom, age):
         try:
-            sql = "INSERT INTO listepersonne (Nom, Age,email) VALUES (%s, %s, %s)"
-            valeur = (nom, age, email)
+            sql = "INSERT INTO listepersonne (Nom, Age) VALUES (%s, %s)"
+            valeur = (nom, age)
             cls.cursor.execute(sql, valeur)
             cls.connexion.commit()
             sms = "Personne ajoutée avec succès !"
@@ -18,7 +17,7 @@ class ListePersonneDao:
         return sms
 
     @classmethod
-    def Affiche_personne(cls, ID):
+    def Affiche_personne(cls):
         try:
             sql = "SELECT * FROM listepersonne"
             cls.cursor.execute(sql)
@@ -26,9 +25,10 @@ class ListePersonneDao:
             if not liste:
                 sms = "Aucune personne à afficher dans votre liste."
             else:
+                sms = "Liste des personnes :"
                 for row in liste:
                     id, nom, age = row
-                    print(f"Identifiant: {id}, Nom: {nom}, Âge: {age}")
+                    sms += f"\nIdentifiant: {id}, Nom: {nom}, Age: {age}"
         except Exception as e:
             sms = f"Une erreur s'est produite lors de l'affichage des informations de la personne : {e}"
         return sms
@@ -40,8 +40,8 @@ class ListePersonneDao:
             cls.cursor.execute(sql, (nom,))
             personne = cls.cursor.fetchone()
             if personne:
-                id, nom, age, email = personne
-                sms = f"Identifiant: {id}, Nom: {nom}, Age: {age}, E-mail: {email}"
+                id, nom, age = personne
+                sms = f"Identifiant: {id}, Nom: {nom}, Age: {age}"
             else:
                 sms = f"Aucune personne avec le nom : '{nom}' n'a été trouvée."
         except Exception as e:
@@ -60,7 +60,7 @@ class ListePersonneDao:
                 sms = "Personnes dans la tranche d'âge spécifiée :"
                 for row in result:
                     id, nom, age = row
-                    sms += f"\nIdentifiant: {id}, Nom: {nom}, Âge: {age}"
+                    sms += f"\nIdentifiant: {id}, Nom: {nom}, Age: {age}"
         except Exception as e:
             sms = f"Une erreur s'est produite lors du filtrage des personnes par âge : {e}"
         return sms
@@ -70,8 +70,7 @@ class ListePersonneDao:
         try:
             nom = input("Entrez le nom de la personne : ")
             age = int(input("Entrez l'âge de la personne : "))
-            email = int(input("Entrez l'âge de la personne : "))
-            return nom, age, email
+            return nom, age
         except ValueError as e:
             print("Erreur : L'âge doit être un nombre entier." ,e)
             return None, None

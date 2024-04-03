@@ -17,8 +17,8 @@ class Menu:
     @staticmethod
     def executer_action(choix):
         if choix == 1:
-            nom, age, email = ListePersonneDao.saisie_personne()
-            print(ListePersonneDao.Ajouter_personne(nom, age, email))
+            nom, age = ListePersonneDao.saisie_personne()
+            print(ListePersonneDao.Ajouter_personne(nom, age))
         elif choix == 2:
             print(ListePersonneDao.Affiche_personne())
         elif choix == 3:

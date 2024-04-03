@@ -12,10 +12,7 @@ class ListePersonne:
 
     @email.setter
     def email(self, value):
-        if re.match(r"[^@]+@[^@]+\.[^@]+", value):
             self.__email = value
-        else:
-            print("Adresse e-mail invalide. Veuillez saisir une adresse e-mail valide SVP!!!.")
 
     @property
     def nom(self):
