@@ -1,11 +1,9 @@
 import database
 from ListePersonnes.ListePersonne import ListePersonne
-connexion = database.Connexion()
-cursor = connexion.cursor()
-
 class ListePersonneDao:
     def __init__(self):
-        pass
+        connexion = database.Connexion()
+        cursor = connexion.cursor() 
 
     @classmethod
     def Ajouter_personne(cls, nom, age,email):
