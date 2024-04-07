@@ -1,5 +1,3 @@
-import re  # Importer le module de correspondance de motifs (regex)
-
 class ListePersonne:
     def __init__(self, nom, age, email):
         self.__nom = nom
